@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Npgsql;
 
-namespace Repositories
+namespace MVC.Repositories
 {
     public class CommonRepository
     {
         protected NpgsqlConnection conn;
 
-        public CommonRepositories()
+        public CommonRepository()
         {
             IConfiguration myConfig = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

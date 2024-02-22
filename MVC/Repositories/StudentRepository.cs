@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using MVC.Models;
+using Npgsql;
+using MVC.Repositories;
 
-namespace Repositories
+namespace MVC.Repositories
 {
     public class StudentRepository : CommonRepository, IStudentRepository
     {

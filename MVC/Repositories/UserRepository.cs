@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MVC.Models;
+using Npgsql;
 
-namespace Repositories
+namespace MVC.Repositories
 {
     public class UserRepository : CommonRepository, IUserRepository
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserRepositories(IHttpContextAccessor httpContextAccessor)
+        public UserRepository(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
