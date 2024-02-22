@@ -1,0 +1,57 @@
+@model List<tblStudent>
+
+@{
+    ViewData["Title"] = "GetAllStudents";
+}
+
+<h1>@ViewBag.UserId</h1>
+<h2>Get All Students</h2>
+
+
+<p>
+    <a asp-action="Add" class="btn btn-primary">Add New Student</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>MobileNo</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Language</th>
+                <th>Course</th>
+                <th>Profile</th>
+                <th>Document</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stu in Model)
+            {
+                <tr>
+                    <td>@stu.studId</td>
+                    <td>@stu.studName</td>
+                    <td>@stu.studMobile</td>
+                    <td>@stu.studDob</td>
+                    <td>@stu.studAddress</td>
+                    <td>@stu.studGender</td>
+                    <td>@string.Join(", ", stu.studLanguage)</td>
+                    <td>@stu.coursename</td>
+                    <td><img src="@stu.studProfile" alt="@stu.studProfile" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" /></td>
+                    <td>
+                        <a href="@stu.studDocument" target="_blank" class="btn btn-primary btn-sm">Open Document</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@stu.studId" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Edit" asp-route-id="@stu.studId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@stu.studId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,110 @@
+@model tblStudent
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-5">
+    <h2>Update</h2>
+    <form asp-action="Edit" asp-route-id="@Model?.studId"  enctype="multipart/form-data" method="post" asp-controller="Student">
+    <!-- Rest of your form code -->
+
+
+        <input asp-for="studId" type="hidden" asp-for="studId" />
+
+        <div class="mb-3">
+            <label asp-for="studName" class="form-label">Student Name</label>
+            <input asp-for="studName" type="text" class="form-control" id="name" placeholder="Name">
+            <span asp-validation-for="studName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="studDob" class="form-label">Date Of Birth</label>
+            <input asp-for="studDob" type="datetime-local" class="form-control" id="dob">
+            <span asp-validation-for="studDob" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="studGender" class="form-label">Gender</label>
+            <div>
+                <input type="radio" asp-for="studGender" value="Male" class="form-check-input" /> Male
+                <input type="radio" asp-for="studGender" value="Female" class="form-check-input" /> Female
+                <input type="radio" asp-for="studGender" value="Other" class="form-check-input" /> Other
+            </div>
+            <span asp-validation-for="studGender" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="studAddress" class="form-label">Address</label>
+            <input asp-for="studAddress" type="text" class="form-control" id="address" placeholder="Address">
+            <span asp-validation-for="studAddress" class="text-danger"></span>
+        </div>
+
+        <!-- Add validation for other fields -->
+
+        <div class="mb-3">
+            <label for="course" class="form-label">Course</label>
+            <select asp-for="courseId" class="form-select" id="course" name="courseId">
+                <option value="">Select a Course</option>
+                @if (ViewBag.Course != null)
+                {
+                    foreach (var course in ViewBag.Course)
+                    {
+                        <option value="@course.courseId">@course.courseName</option>
+                    }
+                }
+            </select>
+            <p id="val_course" class="validate">Please Select Course</p>
+            <span asp-validation-for="courseId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+    <label>Language:</label>
+
+    @foreach (var lang in new List<string> { "Hindi", "English", "Bengali", "Telugu", "Marathi" })
+    {
+        <div class="form-check">
+            @{
+                var isChecked = Model.studLanguage != null && Model.studLanguage.Contains(lang);
+            }
+            <input type="checkbox" name="studLanguage" value="@lang" class="form-check-input" @(isChecked ? "checked" : "") />
+            <label class="form-check-label">@lang</label>
+        </div>
+    }
+
+    <span asp-validation-for="studLanguage" class="text-danger"></span>
+</div>
+
+        <div class="mb-3">
+            <label asp-for="studMobile" class="form-label">Mobile</label>
+            <input asp-for="studMobile" type="number" class="form-control" id="mobile" placeholder="Mobile Number">
+            <span asp-validation-for="studMobile" class="text-danger"></span>
+     <div class="mb-3">
+            <label for="upload-doc" class="form-label">Upload Document</label>
+            <input asp-for="studDocument" type="file" class="form-control" id="upload-doc" name="studentDocument">
+            <span asp-validation-for="studDocument" class="text-danger"></span>
+              <a href="@Model.studDocument" target="_blank">View Document</a>
+        </div>
+
+        <div class="mb-3">
+            <label for="upload-pic" class="form-label">Upload Picture</label>
+            <input asp-for="studProfile" type="file" class="form-control" id="upload-pic" name="studentImage" onchange="previewProfilePicture(event)">
+            <img id="profile-preview" src="#" alt="Profile Preview" style="max-width: 100%; display: none;" />
+              <img src="@Model.studProfile" alt="@Model.studProfile" style="max-width: 100%; max-height: 300px;" />
+        </div>
+
+        <input type="submit" value="Update Student" class="btn btn-primary">
+    </form>
+</div>
+
+<script>
+    function previewProfilePicture(event) {
+        var input = event.target;
+        var preview = document.getElementById('profile-preview');
+        preview.style.display = 'block';
+        var reader = new FileReader();
+        reader.onload = function () {
+            preview.src = reader.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+</script>

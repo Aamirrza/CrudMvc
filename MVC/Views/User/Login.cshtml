@@ -1,0 +1,35 @@
+@model tblUser
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Login Form -->
+            <form asp-action="Login" asp-controller="User" method="post">
+                <h2 class="mb-4">Login</h2>
+
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label asp-for="userEmail" class="form-label">Email</label>
+                    <input asp-for="userEmail" type="email" class="form-control" placeholder="Enter your email" >
+                    <span asp-validation-for="userEmail" class="text-danger"></span>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label asp-for="userPassword" class="form-label">Password</label>
+                    <input asp-for="userPassword" type="password" class="form-control" placeholder="Enter your password" >
+                    <span asp-validation-for="userPassword" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <!-- End Login Form -->
+
+        </div>
+    </div>
+</div>

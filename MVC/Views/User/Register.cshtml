@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Include your CSS files here -->
+</head>
+
+<body>
+    @model tblUser
+    @{
+        ViewData["Title"] = "Register";
+    }
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Registration Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="User" asp-action="Register" method="post">
+                            <div class="form-group">
+                                <label asp-for="userEmail">Email</label>
+                                <input asp-for="userEmail" type="email" class="form-control" id="email"
+                                    placeholder="Enter your email">
+                                <span asp-validation-for="userEmail" class="text-danger"></span>
+                                <span class="text-danger" id="errEmail"></span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="userName">Username</label>
+                                <input asp-for="userName" type="text" class="form-control" id="username"
+                                    placeholder="Choose a username">
+                                <span asp-validation-for="userName" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="userPassword">Password</label>
+                                <input asp-for="userPassword" type="password" class="form-control" id="password"
+                                    placeholder="Enter your password">
+                                <span asp-validation-for="userPassword" class="text-danger"></span>
+                                <span class="text-danger" id="errPass"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="confirmPass">Confirm Password</label>
+                                <input asp-for="confirmPass" type="password" class="form-control"
+                                    id="confirmPassword" placeholder="Confirm your password">
+                                <span asp-validation-for="confirmPass" class="text-danger"></span>
+                                <!-- Add validation message for confirmPassword if needed -->
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Register</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   <script>
+    $(document).ready(function () {
+        $('#btnSubmit').on('click', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            var email = $('#email').val();
+            var password = $('#password').val(); // Get the password value
+
+            // Check email existence
+            var emailSettings = {
+                url: "/User/EmailExists?email=" + email,
+                method: "GET",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+
+            $.ajax(emailSettings).done(function (emailExists) {
+                if (emailExists) {
+                    $('#errEmail').text('Email already exists').css('display', 'block');
+                } else {
+                    $('#errEmail').css('display', 'none');
+
+                    // Check password validity
+                    var passwordSettings = {
+                        url: "/User/ValidPassword?password=" + password,
+                        method: "GET",
+                        timeout: 0,
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    };
+
+                    $.ajax(passwordSettings).done(function (validPassword) {
+                        if (!validPassword) {
+                            $('#errPass').text('Invalid password').css('display', 'block');
+                        } else {
+                            $('#errPass').css('display', 'none');
+                            // Submit the form
+                            $('form').submit();
+                        }
+                    }).fail(function (xhr, status, error) {
+                        console.error(error);
+                        // Handle error here
+                    });
+                }
+            }).fail(function (xhr, status, error) {
+                console.error(error);
+                // Handle error here
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+@model tblStudent
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="container mt-5">
+    <h3>@ViewBag.Username</h3>
+    <h2>Add</h2>
+
+    <form asp-action="Add" enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Student Name</label>
+            <input asp-for="studName" type="text" class="form-control" id="name" placeholder="Name">
+            <span asp-validation-for="studName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date Of Birth</label>
+            <input asp-for="studDob" type="datetime-local" class="form-control" id="dob">
+            <span asp-validation-for="studDob" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <div>
+                <input type="radio" asp-for="studGender" value="Male" class="form-check-input" /> Male
+                <input type="radio" asp-for="studGender" value="Female" class="form-check-input" /> Female
+                <input type="radio" asp-for="studGender" value="Other" class="form-check-input" /> Other
+            </div>
+            <span asp-validation-for="studGender" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input asp-for="studAddress" type="text" class="form-control" id="address" placeholder="Address">
+            <span asp-validation-for="studAddress" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input asp-for="studMobile" type="number" class="form-control" id="mobile" placeholder="Mobile Number">
+            <p id="val_mobile" class="validate">Please Enter Mobile Number</p>
+             <span asp-validation-for="studMobile" class="text-danger"></span>
+        </div>
+
+         <div class="form-group">
+            <label for="category">Select Category</label>
+            <select asp-for="courseId" class="form-control" id="category" name="courseId">
+                <option value="">-- Select Category --</option>
+                @foreach (var category in ViewBag.Course)
+                {
+                    <option value="@category.courseId">@category.courseName</option>
+                }
+            </select>
+        </div>
+
+       <div class="form-group">
+            <label>Language:</label>
+
+            @foreach (var lang in new List<string> { "Hindi", "English", "Bengali", "Telugu", "Marathi"
+            })
+            {
+                <div class="form-check">
+                    <input type="checkbox" name="studLanguage" value="@lang" class="form-check-input" />
+                    <label class="form-check-label">@lang</label>
+                </div>
+            }
+
+            <span asp-validation-for="studLanguage" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="upload-doc" class="form-label">Upload Document</label>
+            <input asp-for="studDocument" type="file" class="form-control" id="upload-doc" name="studentDocument">
+            <span asp-validation-for="studDocument" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="upload-pic" class="form-label">Upload Picture</label>
+            <input asp-for="studProfile" type="file" class="form-control" id="upload-pic" name="studentImage" onchange="previewProfilePicture(event)">
+            <img id="profile-preview" src="#" alt="Profile Preview" style="max-width: 100%; display: none;" />
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">@ViewBag.Userid</label>
+            <input asp-for="userId" type="number" class="form-control" id="stock" placeholder="userId">
+        </div>
+
+        <input type="submit" value="Add Student" class="btn btn-primary">
+    </form>
+</div>
+
+<script>
+    function previewProfilePicture(event) {
+        var input = event.target;
+        var preview = document.getElementById('profile-preview');
+        preview.style.display = 'block';
+        var reader = new FileReader();
+        reader.onload = function () {
+            preview.src = reader.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+</script>
+
+
+        

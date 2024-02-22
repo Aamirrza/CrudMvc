@@ -1,0 +1,55 @@
+@model tblStudent
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Student Details</h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID:</dt>
+                <dd class="col-sm-9">@Model.studId</dd>
+
+                <dt class="col-sm-3">Name:</dt>
+                <dd class="col-sm-9">@Model.studName</dd>
+
+                <dt class="col-sm-3">DOB:</dt>
+                <dd class="col-sm-9">@Model.studDob</dd>
+
+                <dt class="col-sm-3">Gender:</dt>
+                <dd class="col-sm-9">@Model.studGender</dd>
+
+                <dt class="col-sm-3">Address:</dt>
+                <dd class="col-sm-9">@Model.studAddress</dd>
+
+                <dt class="col-sm-3">Language:</dt>
+                <dd class="col-sm-9">@string.Join(", ", @Model.studLanguage)</dd>
+
+                <dt class="col-sm-3">Course:</dt>
+                <dd class="col-sm-9">@Model.courseId</dd>
+
+                <dt class="col-sm-3">Profile Image:</dt>
+                <dd class="col-sm-9">
+                    <img src="@Model.studProfile" alt="@Model.studProfile"
+                        style="max-width: 100%; max-height: 300px;" />
+                </dd>
+
+                <dt class="col-sm-3">Document:</dt>
+                <dd class="col-sm-9">
+                    <a href="@Model.studDocument" target="_blank">View Document</a>
+                </dd>
+
+                <dt class="col-sm-3">MobileNo:</dt>
+                <dd class="col-sm-9">@Model.studMobile</dd>
+            </dl>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="mt-3 btn btn-secondary">Back to List</a>
+</div>
+
+
+
