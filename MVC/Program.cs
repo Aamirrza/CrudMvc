@@ -1,5 +1,4 @@
-
-using Repositories;
+using MVC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
 builder.Services.AddSingleton<ICourseRepository, CourseRepository>();
+builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
 
 builder.Services.AddAuthentication("MyCookieAuthenticationScheme")
    .AddCookie("myCookieAuthenticationScheme", Options =>
@@ -35,6 +35,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 
@@ -42,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();
